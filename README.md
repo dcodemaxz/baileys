@@ -2,17 +2,13 @@
 
 <div align="center">
 
-  <img src="https://iili.io/2Zpjtlp.jpg" />
+  <img src="https://raw.githubusercontent.com/dcodemaxz/Vikaru-Bot/refs/heads/main/image.png" />
 
   <a href="https://github.com/dcodemaxz/baileys">
     <img src="https://img.shields.io/github/package-json/v/dcodemaxz/baileys?color=red&label=Version&logo=github" alt="GitHub version" />
   </a>
 
-  <a href="https://github.com/dcodemaxz/baileys">
-    <img src="https://img.shields.io/github/downloads/dcodemaxz/baileys/total?color=red&label=Downloads&logo=github" alt="GitHub downloads" />
-  </a>
-
-  <a href="https://whatsapp.com/channel/0029VaEe0l9Au3aVRw2x2r0V">
+  <a href="https://chat.whatsapp.com/GlNdk54lm9V7C4U54SXnh1">
     <img src="https://img.shields.io/badge/WhatsApp-Channel-25D366?logo=whatsapp&logoColor=white" alt="WhatsApp Channel" />
   </a>
 
