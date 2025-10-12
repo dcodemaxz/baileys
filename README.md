@@ -203,4 +203,4 @@ Use it responsibly. Avoid spam, abuse, or illegal activity.
 
 ## 📄 License
 
-MIT © 2025 [dcodemaxz](https://github.com/dcodemaxz/baileys?tab=readme-ov-file#)
+MIT © 2025 [dcodemaxz](LICENSE)
