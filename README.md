@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  <img src="https://raw.githubusercontent.com/dcodemaxz/Vikaru-Bot/refs/heads/main/image.png" />
+  <img src="https://raw.githubusercontent.com/dcodemaxz/Vikaru-Bot/refs/heads/main/media/image.png" />
 
   <a href="https://github.com/dcodemaxz/baileys">
     <img src="https://img.shields.io/github/package-json/v/dcodemaxz/baileys?color=red&label=Version&logo=github" alt="GitHub version" />
