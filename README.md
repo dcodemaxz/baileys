@@ -109,6 +109,9 @@ vikaru.ev.on('messages.upsert', ({ messages }) => {
 
     // Delete saved id after 10 seconds
     setTimeout(() => duplicateMsg.delete(msg.key.id), 10000);
+
+    // Incoming messages
+    console.log(msg.key.remoteJid, msg.message?.conversation)
 })
 ```
 
@@ -215,6 +218,7 @@ async function vikarustart() {
         // Delete saved id after 10 seconds
         setTimeout(() => duplicateMsg.delete(msg.key.id), 10000);
 
+        // Incoming messages
         console.log(msg.key.remoteJid, msg.message?.conversation)
     })
 
