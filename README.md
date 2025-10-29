@@ -22,15 +22,6 @@ This version includes several improvements, enhanced performance, and TypeScript
 
 > 🔥 This Baileys is intended to support the [Vikaru-Bot](https://github.com/dcodemaxz/Vikaru-Bot) project
 
-<details>
-<summary>⚡ Thanks to</summary>
-
-- @whiskeysockets  
-- @nstar-y/bail  
-- @whileys  
-
-</details>
-
 ---
 
 ## 📖 Table of Contents
@@ -391,7 +382,15 @@ await vikaru.sendMessage(id, {
 
 ## 🪲 Reporting Issues
 
-If you encounter bugs or need help, please open an issue on the [GitHub repository](https://github.com/dcodemaxz/baileys/issues).
+If you find a bug or need help, please open an [issue](https://github.com/dcodemaxz/baileys/issues).
+
+<details>
+<summary>⚡ Developer</summary>
+
+- [WhatsApp](https://wa.me/+6289508899033)  
+- [Telegram](https://t.me/dcodemaxz)
+
+</details>
 
 ---
 
@@ -399,6 +398,15 @@ If you encounter bugs or need help, please open an issue on the [GitHub reposito
 
 This project is not affiliated with WhatsApp Inc.\
 Use it responsibly. Avoid spam, abuse, or illegal activity.
+
+<details>
+<summary>⚡ Thanks to</summary>
+
+- @whiskeysockets  
+- @nstar-y/bail  
+- @whileys  
+
+</details>
 
 ---
 
