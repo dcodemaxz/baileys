@@ -1,13 +1,13 @@
 import { AxiosRequestConfig } from 'axios';
 import { proto } from '../../WAProto';
-import { AuthenticationCreds, BaileysEventEmitter, CacheStore, SignalKeyStoreWithTransaction, SocketConfig } from '../Types';
+import { AuthenticationCreds, VikaruEventEmitter, CacheStore, SignalKeyStoreWithTransaction, SocketConfig } from '../Types';
 import { ILogger } from './logger';
 type ProcessMessageContext = {
     shouldProcessHistoryMsg: boolean;
     placeholderResendCache?: CacheStore;
     creds: AuthenticationCreds;
     keyStore: SignalKeyStoreWithTransaction;
-    ev: BaileysEventEmitter;
+    ev: VikaruEventEmitter;
     getMessage: SocketConfig['getMessage'];
     logger?: ILogger;
     options: AxiosRequestConfig<{}>;
