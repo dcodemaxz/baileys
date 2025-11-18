@@ -1,4 +1,4 @@
-# <div align='center'>Baileys Modified | Beta test</div>
+# <div align="center">Baileys Modified</div>
 
 <div align="center">
 
@@ -46,15 +46,16 @@ This version includes several improvements, enhanced performance, and TypeScript
 
 | Feature                              | Description                                                |
 | ------------------------------------ | ---------------------------------------------------------- |
-| 🚫 **Anti-duplicate messages**     | Solution to overcome duplicate incoming message id        |
-| 💬 **Send Messages to Channels**     | Supports text & media messages to WhatsApp channels        |
+| 🚫 **Anti-duplicate Response**       | Solution to overcome duplicate incoming message id         |
+| 🗞️ **Newsletter Management**         | Support for managing newsletters                           |
 | 🔘 **Button & Interactive Messages** | Full interactive support for WhatsApp Messenger & Business |
-| 🖼️ **Send Album Messages**          | Send grouped media (album style) with caption support      |
-| 👥 **Group with LID Support**        | Enhanced support for `@lid` and `@jid` identifiers         |
+| 🖼️ **Send Album Messages**           | Send grouped media (album style) with caption support      |
+| 👥 **Group with JID Support**        | Enhanced support for `@jid` and `@lid` identifiers         |
 | 🤖 **AI Message Icon**               | Add AI-styled icons to your bot replies                    |
-| 🖼️ **Full-Size Profile Pictures**   | Upload HD profile pictures without cropping                |
+| 🖼️ **Full-Size Profile Pictures**    | Upload HD profile pictures without cropping                |
 | 🔑 **Custom Pairing Codes**          | Generate and use your own pairing codes                    |
-| 🛠️ **Libsignal Fixes**              | Clean console logs and improved stability                  |
+| 📡 **Libsignal Fixes**               | Clean console logs and improved stability                  |
+| 🛠️ **Pairing/Qr Fixes**              | Fixed bug where WhatsApp cannot be linked (Pairing/Qr)     |
 | ⚙️ **Multi-file Auth Support**       | Built-in multi-file auth like official Baileys             |
 | 📈 **Optimized Performance**         | Rewritten modules for faster connection and retries        |
 
@@ -84,25 +85,25 @@ npm install baileys@github:dcodemaxz/baileys
 
 ```ts
 // Duplicate message ( cached )
-const duplicateMsg = new Set();
+const duplicateMsg = new Map();
 
-vikaru.ev.on('messages.upsert', ({ messages }) => {
-    const msg = messages[0]
+vikaru.ev.on("messages.upsert", ({ messages }) => {
+    const mek = messages[0]
 
     // Stop execution if the same ID is detected
-    if (duplicateMsg.has(msg.key.id)) {
-      console.log(`[ Skip Duplicate-Id ] ▸ ${msg.key.participant || msg.key.remoteJid} | ${msg.key.id}`);
-      return;
-    };
+    if (duplicateMsg.has(mek.key.id)) {
+        console.log(`\n› [ Duplicate-Id ] ▸ ${mek.key.participant || mek.key.remoteJid} | ${mek.key.id}`);
+        return;
+    }
 
-    // Save all ids to cached
-    duplicateMsg.add(msg.key.id);
+    // Delete saved id after 10 id
+    if (duplicateMsg.size >= 10) duplicateMsg.clear();
 
-    // Delete saved id after 10 seconds
-    setTimeout(() => duplicateMsg.delete(msg.key.id), 10000);
+    // Save the incoming id
+    duplicateMsg.set(mek.key.id, true);
 
-    // Incoming messages
-    console.log(msg.key.remoteJid, msg.message?.conversation)
+    // Command ( case / plugin )
+    console.log(mek.key.remoteJid, mek.message?.conversation)
 })
 ```
 
@@ -122,7 +123,7 @@ const {
 
 // Function starts
 async function vikarustart() {
-    const { state, saveCreds } = await useMultiFileAuthState('./session/')
+    const { state, saveCreds } = await useMultiFileAuthState("./session/")
     const vikaru = makeWASocket({
         auth: state,
         browser: ["Ubuntu", "Chrome", "20.0.04"],
@@ -135,13 +136,13 @@ async function vikarustart() {
     // Piring code
     if (!vikaru.authState.creds.registered) {
         const phoneNumber = "6289508899033"
-        const customCode = 'MAXZBAIL';
+        const customCode = "MAXZBAIL";
         const code = await vikaru.requestPairingCode(phoneNumber, customCode);
-        console.log(`Your Pairing Code: ${code?.match(/.{1,4}/g)?.join('-') || code}`);
+        console.log(`Your Pairing Code: ${code?.match(/.{1,4}/g)?.join("-") || code}`);
     }
 
     // Save credentials after connecting
-    vikaru.ev.on('creds.update', saveCreds)
+    vikaru.ev.on("creds.update", saveCreds)
 
 // ------------------------------------------------------------------- //
 
@@ -167,7 +168,7 @@ async function vikarustart() {
                 console.log(`\n› [ Reconnecting ] ▸ Connection Closed...`);
                 vikarustart();
             } else if (reason === DisconnectReason.connectionLost) {
-                console.log(`\n› [ ${chalk.black(chalk.bgYellow(" Reconnecting "))} ] ▸ Connection Lost From Server...`);
+                console.log(`\n› [ Reconnecting ] ▸ Connection Lost From Server...`);
                 vikarustart();
             } else if (reason === DisconnectReason.connectionReplaced) {
                 console.log(`\n› [ Disconnected ] ▸ Connection Replaced, Another New Session Opened`);
@@ -194,23 +195,23 @@ async function vikarustart() {
     const duplicateMsg = new Set();
 
     // Receive messages
-    vikaru.ev.on('messages.upsert', ({ messages }) => {
-        const msg = messages[0]
+    vikaru.ev.on("messages.upsert", ({ messages }) => {
+        const mek = messages[0]
 
         // Stop execution if the same ID is detected
-        if (duplicateMsg.has(msg.key.id)) {
-          console.log(`[ Skip Duplicate-Id ] ▸ ${msg.key.participant || msg.key.remoteJid} | ${msg.key.id}`);
-          return;
-        };
+        if (duplicateMsg.has(mek.key.id)) {
+            console.log(`\n› [ Duplicate-Id ] ▸ ${mek.key.participant || mek.key.remoteJid} | ${mek.key.id}`);
+            return;
+        }
 
-        // Save all ids to cached
-        duplicateMsg.add(msg.key.id);
+        // Delete saved id after 10 id
+        if (duplicateMsg.size >= 10) duplicateMsg.clear();
 
-        // Delete saved id after 10 seconds
-        setTimeout(() => duplicateMsg.delete(msg.key.id), 10000);
+        // Save the incoming id
+        duplicateMsg.set(mek.key.id, true);
 
-        // Incoming messages
-        console.log(msg.key.remoteJid, msg.message?.conversation)
+        // Command ( case / plugin )
+        console.log(mek.key.remoteJid, mek.message?.conversation)
     })
 
 // ------------------------------------------------------------------- //
@@ -232,12 +233,22 @@ vikarustart()
 ### Newsletter Management
 
 ```ts
-const metadata = await vikaru.newsletterMetadata('invite', 'xxxx')
-await vikaru.newsletterUpdateDescription('xxxx@newsletter', 'New Description')
-await vikaru.newsletterUpdatePicture('xxxx@newsletter', buffer)
-await vikaru.newsletterMute('xxxx@newsletter')
-await vikaru.newsletterFollow('xxxx@newsletter')
-await vikaru.newsletterReactMessage('xxxx@newsletter', '175', '🥳')
+await vikaru.newsletterMetadata("invite", "xxxx")
+await vikaru.newsletterUpdateDescription("xxxx@newsletter", "New Description")
+await vikaru.newsletterUpdateName("xxxx@newsletter", "New Name")
+await vikaru.newsletterUpdatePicture("xxxx@newsletter", buffer)
+await vikaru.newsletterRemovePicture("xxxx@newsletter")
+await vikaru.newsletterUnfollow("xxxx@newsletter")
+await vikaru.newsletterFollow("xxxx@newsletter")
+await vikaru.newsletterUnmute("xxxx@newsletter")
+await vikaru.newsletterMute("xxxx@newsletter")
+await vikaru.newsletterCreate("Name", "Description", buffer)
+await vikaru.newsletterAdminCount("xxxx@newsletter")
+await vikaru.newsletterChangeOwner("xxxx@newsletter", "xxxx@s.whatsapp.net")
+await vikaru.newsletterDemote("xxxx@newsletter", "xxxx@s.whatsapp.net")
+await vikaru.newsletterDelete("xxxx@newsletter")
+await vikaru.newsletterReactMessage("xxxx@newsletter", "175", "🥳")
+// For more details, you can visit the file (./lib/Socket/newsletter.js)
 ```
 
 ---
@@ -246,7 +257,7 @@ await vikaru.newsletterReactMessage('xxxx@newsletter', '175', '🥳')
 
 ```ts
 await vikaru.sendMessage(id, {
-    text: 'Hello with AI!',
+    text: "Hello with AI!",
     ai: true
 });
 ```
@@ -257,11 +268,11 @@ await vikaru.sendMessage(id, {
 ```ts
 await vikaru.sendMessage(id, {
     album: [
-        {image: {url: 'https://example.com/image1.jpg'}},
-        {image: {url: 'https://example.com/image2.jpg'}},
-        {video: {url: 'https://example.com/video.mp4'}}
+        {image: {url: "https://example.com/image1.jpg"}},
+        {image: {url: "https://example.com/image2.jpg"}},
+        {video: {url: "https://example.com/video.mp4"}}
     ],
-    caption: 'Album test'
+    caption: "Album test"
 });
 ```
 
@@ -402,9 +413,9 @@ Use it responsibly. Avoid spam, abuse, or illegal activity.
 <details>
 <summary>⚡ Thanks to</summary>
 
-- @whiskeysockets  
-- @nstar-y/bail  
-- @whileys  
+- whiskeysockets  
+- baileys-mod 
+- whileys  
 
 </details>
 
