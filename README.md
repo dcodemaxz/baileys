@@ -400,7 +400,7 @@ await vikaru.sendMessage(id, {
 
 ## 🪲 Reporting Issues
 
-> [!TIP]
+> [!NOTE]
 > If you find a `bug` or `need help`, please open an [issue](https://github.com/dcodemaxz/baileys/issues).
 
 <details>
